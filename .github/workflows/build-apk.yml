@@ -1,5 +1,5 @@
 # Compile l'application Android (APK) dans le cloud, gratuitement, à chaque push sur main.
-# L'APK est publié dans l'onglet "Releases" du dépôt : téléchargez-le depuis votre téléphone.
+# L'APK est publié dans l'onglet "Releases" du dépôt.
 name: Compiler l'APK Android
 on:
   push:
@@ -12,6 +12,9 @@ permissions:
 jobs:
   apk:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: garde-ouaga
     steps:
       - uses: actions/checkout@v4
 
@@ -31,13 +34,13 @@ jobs:
         run: npx cap sync android
 
       - name: Compiler l'APK
-        working-directory: android
+        working-directory: garde-ouaga/android
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
       - name: Renommer l'APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk garde-ouaga.apk
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk ../garde-ouaga.apk
 
       - uses: actions/upload-artifact@v4
         with:
