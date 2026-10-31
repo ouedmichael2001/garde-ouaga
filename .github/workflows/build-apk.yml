@@ -1,0 +1,53 @@
+# Compile l'application Android (APK) dans le cloud, gratuitement, à chaque push sur main.
+# L'APK est publié dans l'onglet "Releases" du dépôt : téléchargez-le depuis votre téléphone.
+name: Compiler l'APK Android
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Installer les dépendances
+        run: npm install --no-audit --no-fund
+
+      - name: Copier l'app web dans le projet Android
+        run: npx cap sync android
+
+      - name: Compiler l'APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Renommer l'APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk garde-ouaga.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: garde-ouaga-apk
+          path: garde-ouaga.apk
+
+      - name: Publier dans Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Garde Ouaga 1.0.${{ github.run_number }}
+          body: "APK Android à installer sur votre téléphone (autorisez l'installation depuis cette source)."
+          files: garde-ouaga.apk
