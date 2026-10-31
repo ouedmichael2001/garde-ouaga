@@ -1,9 +1,8 @@
-# Publie l'application web (dossier www/) sur GitHub Pages à chaque push sur main.
+# Publie l'application web (garde-ouaga/www) sur GitHub Pages à chaque push sur main.
 name: Déployer le site web
 on:
   push:
     branches: [main]
-    paths: ["www/**", ".github/workflows/deploy-web.yml"]
   workflow_dispatch:
 
 permissions:
@@ -26,6 +25,6 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: www
+          path: garde-ouaga/www
       - id: deployment
         uses: actions/deploy-pages@v4
