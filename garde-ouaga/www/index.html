@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Garde Ouaga</title>
+<meta name="description" content="Pharmacies de garde et pharmacies ouvertes maintenant à Ouagadougou, les plus proches d'abord.">
+<meta name="theme-color" content="#0b8a4a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Barlow+Condensed:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="sign" aria-live="polite">
+    <div class="cross lit" id="cross" aria-hidden="true"></div>
+    <p class="app">Garde Ouaga</p>
+    <p class="big" id="headline">Groupe …</p>
+    <p class="sub" id="subline"></p>
+    <div class="facts">
+      <div class="fact"><div class="k">Garde jusqu'au</div><div class="v" id="until">—</div></div>
+      <div class="fact"><div class="k">Pharmacies ordinaires</div><div class="v" id="regular">—</div></div>
+    </div>
+  </section>
+
+  <div class="install" id="installBar" hidden>
+    <p>Installez Garde Ouaga sur votre téléphone pour l'ouvrir même sans connexion.</p>
+    <button class="btn primary" id="installBtn" type="button">Installer</button>
+  </div>
+
+  <div class="notice" id="appui" hidden></div>
+
+  <section class="panel" aria-label="Réglages">
+    <div class="row">
+      <label class="lbl" for="quartier" style="flex-basis:100%">Je suis à</label>
+      <select id="quartier"></select>
+      <button class="btn primary" id="locate" type="button">Me localiser</button>
+    </div>
+    <p class="hint" id="lochint">Touchez « Me localiser » ou choisissez votre quartier pour voir les pharmacies les plus proches d'abord.</p>
+    <div class="row">
+      <input type="search" id="q" placeholder="Rechercher une pharmacie ou un quartier" aria-label="Rechercher">
+    </div>
+    <div class="chips" role="group" aria-label="Filtre">
+      <button class="chip" data-f="open" aria-pressed="true">Ouvertes maintenant</button>
+      <button class="chip" data-f="garde" aria-pressed="false">De garde seulement</button>
+      <button class="chip" data-f="all" aria-pressed="false">Toutes</button>
+    </div>
+    <details class="sim">
+      <summary>Changer le jour, l'heure ou le groupe</summary>
+      <div class="row">
+        <input type="datetime-local" id="when" aria-label="Date et heure">
+        <button class="btn" id="nowbtn" type="button">Maintenant</button>
+      </div>
+      <div class="row">
+        <label class="lbl" for="grp">Groupe de garde</label>
+        <select id="grp">
+          <option value="auto">Automatique (calendrier)</option>
+          <option value="1">Forcer groupe 1</option><option value="2">Forcer groupe 2</option>
+          <option value="3">Forcer groupe 3</option><option value="4">Forcer groupe 4</option>
+        </select>
+      </div>
+      <p class="hint">Si l'Ordre décale le tour de garde (jour férié, etc.), forcez le bon groupe ici.</p>
+    </details>
+  </section>
+
+  <section>
+    <div class="count"><h2 id="listTitle">Ouvertes maintenant</h2><span class="hint" id="n"></span></div>
+    <ul class="list" id="list"></ul>
+  </section>
+
+  <footer>
+    <span>Listes et groupes : <a href="https://ordrepharmacien.bf/index.php/service/pharmacie-garde/" target="_blank" rel="noopener">Ordre national des pharmaciens du Burkina</a>. Relève chaque samedi à 12h.</span>
+    <span>Horaires ordinaires : du lundi au samedi, 7h30–20h00. Dimanches et jours fériés : seules les pharmacies de garde (et d'appui) sont ouvertes.</span>
+    <span>Les distances sont estimées à partir du quartier de chaque pharmacie (≈ ±1 km). Appelez avant de vous déplacer, la nuit surtout.</span>
+    <span class="offline" id="netstate"></span>
+  </footer>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

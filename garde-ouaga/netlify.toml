@@ -1,0 +1,9 @@
+# Netlify / Cloudflare Pages : pas de compilation, on publie le dossier www
+[build]
+  publish = "www"
+  command = ""
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"

@@ -1,0 +1,6 @@
+{
+  "appId": "bf.gardeouaga.app",
+  "appName": "Garde Ouaga",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}
